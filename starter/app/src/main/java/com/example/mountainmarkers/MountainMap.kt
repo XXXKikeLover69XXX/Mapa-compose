@@ -1,5 +1,7 @@
 package com.example.mountainmarkers
 
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.GoogleMapComposable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeOut
@@ -44,19 +46,10 @@ fun MountainMap(
             .fillMaxSize()
             .padding(paddingValues)
     ) {
-        // TODO: Add GoogleMap here
-
-        // TODO: Add cameraPositionState to GoogleMap
-
-        // TODO: Add GoogleMap content
-
-        // TODO: Add call to ColoradoPolygon.  Inside the GoogleMap content, but outside of the when
-        // statement
-
-        // TODO: Add code to add KmlLayer.  Inside the GoogleMap content, but outside of the when
-        // statement
-
-        // TODO: Add ScaleBar outside of of the GoogleMap content
+        GoogleMap(
+            modifier = Modifier.fillMaxSize(),
+            onMapLoaded = { isMapLoaded = true }
+        )
 
         if (!isMapLoaded) {
             AnimatedVisibility(

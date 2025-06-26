@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
-    // TODO: Add the secrets plugin
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -93,13 +93,14 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     implementation(kotlin("reflect"))
 
-    // Google Maps SDK -- these are here for the data model.  Remove these dependencies and replace
-    // with the compose versions.
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
-    // KTX for the Maps SDK for Android library
-    implementation("com.google.maps.android:maps-ktx:5.0.0")
-    // KTX for the Maps SDK for Android Utility Library
-    implementation("com.google.maps.android:maps-utils-ktx:5.0.0")
+    val mapsComposeVersion = "4.4.1"
+    implementation("com.google.maps.android:maps-compose:$mapsComposeVersion")
+    implementation("com.google.maps.android:maps-compose-utils:$mapsComposeVersion")
+    implementation("com.google.maps.android:maps-compose-widgets:$mapsComposeVersion")
+
 }
 
-// TODO: configure the secrets property
+secrets {
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = "local.defaults.properties"
+}
