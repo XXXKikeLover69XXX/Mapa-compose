@@ -52,6 +52,7 @@ fun MountainMap(
             .fillMaxSize()
             .padding(paddingValues)
     ) {
+
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,
