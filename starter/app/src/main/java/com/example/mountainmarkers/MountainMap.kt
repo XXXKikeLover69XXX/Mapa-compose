@@ -1,7 +1,5 @@
 package com.example.mountainmarkers
 
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.GoogleMapComposable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeOut
@@ -21,11 +19,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.mountainmarkers.presentation.MountainsScreenEvent
 import com.example.mountainmarkers.presentation.MountainsScreenViewState
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.CameraPositionState
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import kotlinx.coroutines.flow.Flow
 
-/**
- * Shows a [GoogleMap] with collection of markers
- */
 @Composable
 fun MountainMap(
     paddingValues: PaddingValues,
@@ -35,11 +36,16 @@ fun MountainMap(
 ) {
     var isMapLoaded by remember { mutableStateOf(false) }
 
-    // TODO: Create cameraPositionState
+    // Definimos la posición inicial de la cámara en Santiago (zoom medio para toda la ciudad)
+    val santiago = LatLng(42.8782, -8.5448)
+    val cameraPositionState = remember {
+        CameraPositionState(
+            position = CameraPosition.fromLatLngZoom(santiago, 13f)
+        )
+    }
 
-    // TODO: Create scope from rememberCoroutineScope
-    //   Add LaunchedEffect to zoom when the bounding box changes
-    //   Add LaunchedEffect to react to events from the ViewModel
+    // Coordenadas CERSIA
+    val cersia = LatLng(42.885379650416255, -8.516780818558765)
 
     Box(
         modifier = Modifier
@@ -48,8 +54,23 @@ fun MountainMap(
     ) {
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
+            cameraPositionState = cameraPositionState,
             onMapLoaded = { isMapLoaded = true }
-        )
+        ) {
+            // Aquí pones el marker de CERSIA
+            Marker(
+                state = MarkerState(position = cersia),
+                title = "Edificio CERSIA",
+                snippet = "Santiago de Compostela",
+                onClick = {
+
+                    cameraPositionState.position = CameraPosition(cersia, 17f, 0f, 0f)
+                    true
+                }
+            )
+
+
+        }
 
         if (!isMapLoaded) {
             AnimatedVisibility(
@@ -67,7 +88,3 @@ fun MountainMap(
         }
     }
 }
-
-// TODO: Create zoomAll function
-
-// TODO: Create ColoradoPolygon function
