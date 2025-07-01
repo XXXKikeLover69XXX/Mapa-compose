@@ -82,11 +82,14 @@ class MainActivity : ComponentActivity() {
 
                             is MountainList -> {
                                 MountainMap(
-                                    paddingValues,
-                                    viewState,
-                                    viewModel.getEventChannel(),
-                                    selectedMarkerType
+                                    paddingValues = paddingValues,
+                                    viewState = viewState,
+                                    selectedMarkerType = selectedMarkerType,
+                                    onToggleShowMarkers = {
+                                        viewModel.onEvent(MountainsViewModelEvent.OnToggleAllPeaks)
+                                    }
                                 )
+                            }
                             }
                         }
                     }
@@ -94,4 +97,3 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
