@@ -84,7 +84,7 @@ class MainActivity : ComponentActivity() {
                                 MountainMap(
                                     paddingValues = paddingValues,
                                     viewState = viewState,
-                                    selectedMarkerType = selectedMarkerType,
+
                                     onToggleShowMarkers = {
                                         viewModel.onEvent(MountainsViewModelEvent.OnToggleAllPeaks)
                                     }
